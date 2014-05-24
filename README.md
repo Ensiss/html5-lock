@@ -10,10 +10,11 @@ html5 lock library using kineticjs
 ### Documentation
 
 ```js
-new PatternLock.js({
+new PatternLock({
     container: "container",
     width: 600,
-    height: 600
+    height: 600,
+    size : 4
 }, function(code){
     alert(code)
 });
