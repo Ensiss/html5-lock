@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script src="dist/html5lock-compact.min.js"></script>
+    <script>
+      new PatternLock({
+      container : "container",
+      width : 800,
+      height: 800,
+      size : 4
+      }, function(code){
+      alert(code)
+      });
+    </script>
+  </body>
+</html>
