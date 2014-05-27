@@ -12,11 +12,12 @@
     <div id="container"></div>
     <script src="dist/html5lock-compact.min.js"></script>
     <script>
-      new PatternLock({
+      new PianoLock({
       container : "container",
-      width : 800,
-      height: 800,
-      size : 4
+      width : 400,
+      height: 400,
+      sound : false,
+      display : false
       }, function(code){
       alert(code)
       });
