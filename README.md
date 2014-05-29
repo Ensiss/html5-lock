@@ -34,7 +34,7 @@ new PianoLock({
     width : 400,
     height: 400,
     sound : false, // default true
-    display : false / /default true
+    display : false // default true
 }, function(code){ // on input code
     alert(code)
 });
