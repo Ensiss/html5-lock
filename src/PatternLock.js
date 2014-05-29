@@ -4,7 +4,7 @@
  * MIT Licensed
  */
 
-function PatternLock(config, callback){
+function PatternLock(config, callback) {
 
     var size = Math.min(config.width, config.height);
 
@@ -29,23 +29,39 @@ function PatternLock(config, callback){
     var selected = [];
     var lines = [];
 
-    var size = config.size;
+    var size = config.size || 4;
     var circleCtnrSize = stage.width() / size;
-    
+    var radius = ((circleCtnrSize / 2) * 0.45) | 0;
+    var slices = config.slices || 100;
+    var amplitude = config.amplitude || 0;
+    var frequency = config.frequency || 0;
+    var rot = (config.rotation || 0) * (Math.PI / 180);
+
     for (var i = 0; i < size; i++){
 	for (var j = 0; j < size; j++){
-	    var circle = new Kinetic.Circle({
+	    var circle = new Kinetic.Shape({
 		x: (i * circleCtnrSize) + (circleCtnrSize / 2),
 		y: (j * circleCtnrSize) + (circleCtnrSize / 2),
-		radius: ((circleCtnrSize / 2) * 0.45) | 0,
 		fill: 'green',
 		stroke: 'black',
-		strokeWidth: 4,
-		code : i+""+j
+		strokeWidth: 1,
+		code : i + "" + j,
+		drawFunc: function(context) {
+		    context.beginPath();
+		    context.moveTo(Math.cos(rot) * radius, Math.sin(rot) * radius);
+		    for (var slicei = 1; slicei < slices; slicei++) {
+			var a = rot + slicei * ((2 * Math.PI) / slices);
+			var x = Math.cos(a) * (radius + Math.sin(a * frequency) * amplitude);
+			var y = Math.sin(a) * (radius + Math.sin(a * frequency) * amplitude);
+			context.lineTo(x, y);
+		    }
+		    context.closePath();
+		    context.fillStrokeShape(this);
+		}
 	    });
-	    
+
 	    layer.add(circle);
-	     
+
 	    circle.tween = new Kinetic.Tween({
 		node: circle,
 		scaleX: 2,
@@ -53,7 +69,7 @@ function PatternLock(config, callback){
 		easing: Kinetic.Easings.EaseOut,
 		duration: 0.8
 	    });
-	    
+
 	    circle.on('mouseover touchstart', function(evt) {
 		evt.target.tween.play();
 		if (selectionActive){
