@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js" ></script>
+    <style>
+      body , html, h1{
+        margin: 0px;
+        padding: 0px;
+      }
+      header{
+      font-family: 'Open Sans', Tahoma;
+      background-color: #353535;
+      padding: 15px;
+      }
+      header h1{
+      width: 1000px;
+      margin: 0 auto;
+      }
+
+
+      section{
+      width: 1000px;
+      margin: 0 auto;
+      margin-top: 15px;
+      border: solid 10px #2c3e50;
+      border-radius: 20px;
+      padding: 15px;
+      }
+
+      section .links{
+      width: 50%;
+      display: inline-block;
+      margin: 0 auto;
+      margin-bottom: 15px;
+      }
+
+      section .links a { 
+      width: 50px;
+      display: inline-block;
+      padding: 14px;
+      border : solid 1px grey;
+      text-align: center;
+      }
+
+      .out{
+      display: inline-block;
+      text-align: center;
+      width: 40%;
+      font-size: 25px;
+      font-weight: bold;
+      }
+
+      textarea{
+      float: right;
+      height: 500px;
+      width: 350px;
+      margin-right: 40px;
+      font-size: 9px;
+      }
+
+
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>HTML5 Lock Demo</h1>
+    </header>
+    <section>
+      <div class="links">
+	<a onclick="pattern()">pattern</a>
+	<a onclick="piano()">piano</a>
+      </div>
+      <span class="out">outputs</span>
+      <textarea id="textarea" disabled></textarea>
+      <div id="container-pattern"></div>
+      <div id="container-piano" style="display: none;"></div>
+      
+
+    </section>
+
+    <script src="dist/html5lock-compact.min.js"></script>
+    <script>
+      new PatternLock({
+      container: "container-pattern",
+      width: 600,
+      height: 600,
+      size: 3, // Number of points, default 4
+      slices: 90, // Number of sides of the points, default 100 (for a circle)
+      amplitude: 0.7, // Amplitude of the waves, default 0
+      frequency: 18, // Frequency of the waves, default 0
+      rotation: 90, // Rotation of the shapes, in degrees, default 0
+      annimation : true
+      }, function(code){  // on input code
+      $("#textarea").append(code + "\n")
+      });
+
+      new PianoLock({
+      container: "container-piano",
+      width: 600,
+      height: 600,
+      size: 3, // Number of points, default 4
+      slices: 90, // Number of sides of the points, default 100 (for a circle)
+      amplitude: 0.7, // Amplitude of the waves, default 0
+      frequency: 18, // Frequency of the waves, default 0
+      rotation: 90, // Rotation of the shapes, in degrees, default 0
+      annimation : true
+      }, function(code){  // on input code
+      $("#textarea").append(code + "\n")
+      console.log(code);
+      });
+
+      function pattern(){
+        $("#container-piano").hide();
+        $("#container-pattern").show();
+      }
+
+      function piano(){
+        $("#container-pattern").hide();
+        $("#container-piano").show();
+      }
+
+    </script>
+  </body>
+</html>

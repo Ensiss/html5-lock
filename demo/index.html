@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container-pattern"></div>
+    <div id="container-piano"></div>
+    <script src="../dist/html5lock-compact.min.js"></script>
+    <script>
+      new PatternLock({
+      container: "container-pattern",
+      width: 600,
+      height: 600,
+      size: 3, // Number of points, default 4
+      slices: 90, // Number of sides of the points, default 100 (for a circle)
+      amplitude: 0.7, // Amplitude of the waves, default 0
+      frequency: 18, // Frequency of the waves, default 0
+      rotation: 90, // Rotation of the shapes, in degrees, default 0
+      annimation : true
+      }, function(code){  // on input code
+      console.log(code);
+      });
+
+      new PianoLock({
+      container: "container-piano",
+      width: 600,
+      height: 600,
+      size: 3, // Number of points, default 4
+      slices: 90, // Number of sides of the points, default 100 (for a circle)
+      amplitude: 0.7, // Amplitude of the waves, default 0
+      frequency: 18, // Frequency of the waves, default 0
+      rotation: 90, // Rotation of the shapes, in degrees, default 0
+      annimation : true
+      }, function(code){  // on input code
+      console.log(code);
+      });
+    </script>
+  </body>
+</html>

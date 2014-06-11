@@ -42,9 +42,9 @@ function PatternLock(config, callback) {
 	    var circle = new Kinetic.Shape({
 		x: (i * circleCtnrSize) + (circleCtnrSize / 2),
 		y: (j * circleCtnrSize) + (circleCtnrSize / 2),
-		fill: 'green',
-		stroke: 'black',
-		strokeWidth: 1,
+		fill: "#bdc3c7",
+		stroke: '#34495e',
+		strokeWidth: 3,
 		code : i + "" + j,
 		drawFunc: function(context) {
 		    context.beginPath();
@@ -60,6 +60,25 @@ function PatternLock(config, callback) {
 		}
 	    });
 
+	    circle.startAnnimation = function(){
+
+		if (!config.annimation)
+		    return;
+		var that = this;
+		this._annim = new Kinetic.Animation(function (frame) {
+                    var angleDiff = frame.timeDiff * 50 / 1000;
+                    that.rotate(angleDiff);
+		}, layer);
+		this._annim.start();
+	    }
+
+	    circle.stopAnnimation = function(){
+		this._annim.stop();
+	    }
+
+	    circle.startAnnimation();
+
+
 	    layer.add(circle);
 
 	    circle.tween = new Kinetic.Tween({
@@ -67,11 +86,12 @@ function PatternLock(config, callback) {
 		scaleX: 2,
 		scaleY: 2,
 		easing: Kinetic.Easings.EaseOut,
-		duration: 0.8
+		duration: 0.8,
 	    });
-
+	    
 	    circle.on('mouseover touchstart', function(evt) {
 		evt.target.tween.play();
+		evt.target.stopAnnimation();
 		if (selectionActive){
 		    for (i in  selected){
 			if (selected[i] == evt.target)
@@ -83,8 +103,8 @@ function PatternLock(config, callback) {
 			var to = selected[selected.length - 2];
 			var line = new Kinetic.Line({
 			    points: [from.getX(), from.getY(), to.getX(), to.getY()],
-			    stroke: 'red',
-			    strokeWidth: 15,
+			    stroke: '#3498db',
+			    strokeWidth: 10,
 			    lineCap: 'round',
 			    lineJoin: 'round'
 			});
@@ -99,6 +119,7 @@ function PatternLock(config, callback) {
 	    circle.on('mouseout touchend', function(evt) {
 		if (!selectionActive){
 		    evt.target.tween.reverse();
+		    evt.target.startAnnimation();
 		    selected = [];
 		}
 	    });
@@ -124,6 +145,7 @@ function PatternLock(config, callback) {
 	}
 	for (i in selected){
 	    selected[i].tween.reverse();
+	    selected[i].startAnnimation();
 	}
 	lines = [];
 	selected = [];
