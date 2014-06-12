@@ -60,9 +60,9 @@ function PatternLock(config, callback) {
 		}
 	    });
 
-	    circle.startAnnimation = function(){
+	    circle.startAnimation = function(){
 
-		if (!config.annimation)
+		if (!config.animation)
 		    return;
 		var that = this;
 		this._annim = new Kinetic.Animation(function (frame) {
@@ -72,11 +72,11 @@ function PatternLock(config, callback) {
 		this._annim.start();
 	    }
 
-	    circle.stopAnnimation = function(){
+	    circle.stopAnimation = function(){
 		this._annim.stop();
 	    }
 
-	    circle.startAnnimation();
+	    circle.startAnimation();
 
 
 	    layer.add(circle);
@@ -91,7 +91,7 @@ function PatternLock(config, callback) {
 	    
 	    circle.on('mouseover touchstart', function(evt) {
 		evt.target.tween.play();
-		evt.target.stopAnnimation();
+		evt.target.stopAnimation();
 		if (selectionActive){
 		    for (i in  selected){
 			if (selected[i] == evt.target)
@@ -119,7 +119,7 @@ function PatternLock(config, callback) {
 	    circle.on('mouseout touchend', function(evt) {
 		if (!selectionActive){
 		    evt.target.tween.reverse();
-		    evt.target.startAnnimation();
+		    evt.target.startAnimation();
 		    selected = [];
 		}
 	    });
@@ -145,7 +145,7 @@ function PatternLock(config, callback) {
 	}
 	for (i in selected){
 	    selected[i].tween.reverse();
-	    selected[i].startAnnimation();
+	    selected[i].startAnimation();
 	}
 	lines = [];
 	selected = [];
