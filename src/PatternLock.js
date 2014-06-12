@@ -61,23 +61,25 @@ function PatternLock(config, callback) {
 	    });
 
 	    circle.startAnimation = function(){
-
 		if (!config.animation)
 		    return;
-		var that = this;
-		this._annim = new Kinetic.Animation(function (frame) {
-                    var angleDiff = frame.timeDiff * 50 / 1000;
-                    that.rotate(angleDiff);
-		}, layer);
-		this._annim.start();
+
+		if (!this._anim) {
+		    var that = this;
+		    this._anim = new Kinetic.Animation(function (frame) {
+			var angleDiff = frame.timeDiff * 50 / 1000;
+			that.rotate(angleDiff);
+		    }, layer);
+		}
+		this._anim.start();
 	    }
 
 	    circle.stopAnimation = function(){
-		this._annim.stop();
+		if (this._anim)
+		    this._anim.stop();
 	    }
 
 	    circle.startAnimation();
-
 
 	    layer.add(circle);
 
